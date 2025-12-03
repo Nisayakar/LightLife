@@ -1,0 +1,231 @@
+com.akif.lightlife
+│
+├── config
+│   ├── AppConfig.java
+│   ├── SecurityConfig.java
+│   └── SwaggerConfig.java
+│
+├── controller
+│   ├── AbonelikController.java
+│   ├── AktiviteController.java
+│   ├── BildirimController.java
+│   ├── DestekTalebiController.java
+│   ├── DiyetController.java
+│   ├── DiyetisyenController.java
+│   ├── DiyetTarifiController.java
+│   ├── EgitimController.java
+│   ├── EgzersizController.java
+│   ├── KampanyaController.java
+│   ├── KiloController.java
+│   ├── KullaniciController.java
+│   ├── KullaniciDiyetisyenController.java
+│   ├── MalzemeController.java
+│   ├── MesajController.java
+│   ├── OdemeController.java
+│   ├── OgunController.java
+│   ├── OgunDiyetTarifiController.java
+│   ├── RaporController.java
+│   └── YiyecekController.java
+│
+├── dto
+│   ├── request
+│   │   ├── AbonelikOlusturRequest.java
+│   │   ├── AktiviteEkleRequest.java
+│   │   ├── BildirimOlusturRequest.java
+│   │   ├── DestekTalebiOlusturRequest.java
+│   │   ├── DiyetisyenGirisRequest.java
+│   │   ├── DiyetisyenKayitRequest.java
+│   │   ├── DiyetOlusturRequest.java
+│   │   ├── EgitimOlusturRequest.java
+│   │   ├── EgzersizEkleRequest.java
+│   │   ├── EgzersizKayitRequest.java
+│   │   ├── KampanyaOlusturRequest.java
+│   │   ├── KiloKayitRequest.java
+│   │   ├── KullaniciGirisRequest.java
+│   │   ├── KullaniciKayitRequest.java
+│   │   ├── MalzemeRequest.java
+│   │   ├── MesajGonderRequest.java
+│   │   ├── OdemeYapRequest.java
+│   │   
+│   │
+│   └── response
+│       ├── AbonelikResponse.java
+│       ├── AktiviteResponse.java
+│       ├── BildirimResponse.java
+│       ├── DestekTalebiResponse.java
+│       ├── DiyetResponse.java
+│       ├── DiyetisyenResponse.java
+│       ├── EgitimResponse.java
+│       ├── EgzersizResponse.java
+│       ├── GunlukRaporKaydiResponse.java
+│       ├── GunlukRaporResponse.java
+│       ├── KampanyaResponse.java
+│       ├── KiloResponse.java
+│       ├── KullaniciResponse.java
+│       ├── MalzemeResponse.java
+│       ├── MesajResponse.java
+│       ├── OdemeResponse.java
+│       ├── OgunResponse.java
+│       └── YiyecekResponse.java
+│
+├── entity
+│   ├── Abonelik.java
+│   ├── Aktivite.java
+│   ├── Bildirim.java
+│   ├── DestekTalebi.java
+│   ├── Diyet.java
+│   ├── Diyetisyen.java
+│   ├── DiyetTarifi.java
+│   ├── Egitim.java
+│   ├── Egzersiz.java
+│   ├── GunlukRaporKaydi.java
+│   ├── Kampanya.java
+│   ├── Kilo.java
+│   ├── Kullanici.java
+│   ├── KullaniciDiyetisyen.java
+│   ├── Malzeme.java
+│   ├── Mesaj.java
+│   ├── Odeme.java
+│   ├── Ogun.java
+│   ├── OgunDiyetTarifi.java
+│   └── Yiyecek.java
+│
+├── enums
+│   ├── AbonelikTuru.java
+│   ├── AktiviteSeviyesi.java
+│   ├── KampanyaTuru.java
+│   ├── OdemeDurumu.java
+│   └── RolTipi.java
+│
+├── exception
+│   ├── AlreadyExistsException.java
+│   ├── ApiException.java
+│   ├── BadRequestException.java
+│   ├── GlobalExceptionHandler.java
+│   ├── NotFoundException.java
+│   ├── UnauthorizedException.java
+│   └── ValidationException.java
+│
+├── mapper
+│   ├── AbonelikMapper.java
+│   ├── AktiviteMapper.java
+│   ├── BildirimMapper.java
+│   ├── DestekTalebiMapper.java
+│   ├── DiyetMapper.java
+│   ├── DiyetisyenMapper.java
+│   ├── DiyetTarifiMapper.java
+│   ├── EgitimMapper.java
+│   ├── EgzersizMapper.java
+│   ├── GunlukRaporKaydiMapper.java
+│   ├── KampanyaMapper.java
+│   ├── KiloMapper.java
+│   ├── KullaniciMapper.java
+│   ├── MalzemeMapper.java
+│   ├── MesajMapper.java
+│   ├── OdemeMapper.java
+│   ├── OgunMapper.java
+│   └── YiyecekMapper.java
+│
+├── pattern
+│   ├── facade
+│   │   └── GunlukRaporFacade.java
+│   ├── factory
+│   │   ├── Bildirim.java
+│   │   ├── BildirimFactory.java
+│   │   ├── EmailBildirim.java
+│   │   ├── PushBildirim.java
+│   │   └── SmsBildirim.java
+│   ├── observer
+│   │   ├── BildirimMerkezi.java
+│   │   ├── BildirimObserver.java
+│   │   ├── BildirimOlayi.java
+│   │   ├── DiyetisyenBildirimObserver.java
+│   │   └── KullaniciBildirimObserver.java
+│   ├── strategy
+│   │   ├── HedefHesaplamaStrateji.java
+│   │   ├── KiloAlmaStratejisi.java
+│   │   ├── KiloVermeStratejisi.java
+│   │   ├── TutarIndirimStratejisi.java
+│   │   └── YuzdeIndirimStratejisi.java
+│   └── template
+│       ├── GunlukRapor.java
+│       ├── HaftalikRapor.java
+│       └── RaporTemplate.java
+│
+├── repository
+│   ├── AbonelikRepository.java
+│   ├── AktiviteRepository.java
+│   ├── BildirimRepository.java
+│   ├── DestekTalebiRepository.java
+│   ├── DiyetRepository.java
+│   ├── DiyetTarifiRepository.java
+│   ├── DiyetisyenRepository.java
+│   ├── EgitimRepository.java
+│   ├── EgzersizRepository.java
+│   ├── GunlukRaporKaydiRepository.java
+│   ├── KampanyaRepository.java
+│   ├── KiloRepository.java
+│   ├── KullaniciDiyetisyenRepository.java
+│   ├── KullaniciRepository.java
+│   ├── MalzemeRepository.java
+│   ├── MesajRepository.java
+│   ├── OdemeRepository.java
+│   ├── OgunDiyetTarifiRepository.java
+│   └── OgunRepository.java
+│       └── YiyecekRepository.java
+│
+├── security
+│   ├── CustomUserDetailsService.java
+│   ├── JwtAuthenticationFilter.java
+│   ├── JwtTokenProvider.java
+│   └── SecurityConstants.java
+│
+├── service
+│   ├── AbonelikService.java
+│   ├── AktiviteService.java
+│   ├── BildirimService.java
+│   ├── DestekTalebiService.java
+│   ├── DiyetService.java
+│   ├── DiyetTarifiService.java
+│   ├── DiyetisyenService.java
+│   ├── EgitimService.java
+│   ├── EgzersizService.java
+│   ├── KampanyaService.java
+│   ├── KiloService.java
+│   ├── KullaniciService.java
+│   ├── KullaniciDiyetisyenService.java
+│   ├── MalzemeService.java
+│   ├── MesajService.java
+│   ├── OdemeService.java
+│   ├── OgunDiyetTarifiService.java
+│   ├── OgunService.java
+│   ├── RaporService.java
+│   └── YiyecekService.java
+│   └── ServiceImpl
+│       ├── AbonelikServiceImpl.java
+│       ├── AktiviteServiceImpl.java
+│       ├── BildirimServiceImpl.java
+│       ├── DestekTalebiServiceImpl.java
+│       ├── DiyetServiceImpl.java
+│       ├── DiyetTarifiServiceImpl.java
+│       ├── DiyetisyenServiceImpl.java
+│       ├── EgitimServiceImpl.java
+│       ├── EgzersizServiceImpl.java
+│       ├── KampanyaServiceImpl.java
+│       ├── KiloServiceImpl.java
+│       ├── KullaniciServiceImpl.java
+│       ├── KullaniciDiyetisyenServiceImpl.java
+│       ├── MalzemeServiceImpl.java
+│       ├── MesajServiceImpl.java
+│       ├── OdemeServiceImpl.java
+│       ├── OgunDiyetTarifiServiceImpl.java
+│       ├── OgunServiceImpl.java
+│       ├── RaporServiceImpl.java
+│       └── YiyecekServiceImpl.java
+│
+├── util
+│   ├── BmiUtil.java
+│   ├── HesaplamaUtil.java
+│   └── TarihUtil.java
+│
+└── LightlifeApplication.java

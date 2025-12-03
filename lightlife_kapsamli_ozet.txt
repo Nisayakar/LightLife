@@ -1,0 +1,231 @@
+LIGHTLIFE PROJESİ - KAPSAMLI PROJE ÖZETİ
+
+Bu belge, LightLife sağlık & diyet yönetimi uygulamasının tüm teknik
+yapısını, iş mantıklarını, modüllerini ve tasarım kararlarını
+profesyonel bir düzeyde özetler. Proje, Spring Boot tabanlı çok katmanlı
+bir mimari ile geliştirilmiştir ve temiz kod, genişletilebilirlik,
+modülerlik ve domain odaklı tasarım prensipleri esas alınmıştır.
+
+  -------------------------
+  1) PROJE GENEL MİMARİSİ
+  -------------------------
+
+LightLife, aşağıdaki ana mimari katmanlardan oluşur:
+
+1.  Controller Katmanı
+    -   HTTP isteklerini karşılar.
+    -   Request DTO alır, Response DTO döner.
+    -   İş mantığını Service’e devreder.
+2.  Service Katmanı
+    -   İş kurallarının tanımlandığı interface katmanı.
+    -   Servis metodları burada belirlenir.
+3.  ServiceImpl Katmanı
+    -   Gerçek iş mantığının yazıldığı yer.
+    -   Validasyon, hesaplamalar, business flow burada yapılır.
+    -   Repository ve mapper burada kullanılır.
+4.  Repository Katmanı
+    -   Veritabanı CRUD işlemleri.
+    -   Spring Data JPA ile geliştirilmiş.
+5.  DTO Katmanı
+    -   Request ve Response sınıfları.
+    -   Dış dünya ile iç yapı arasındaki veri akışını düzenler.
+6.  Mapper Katmanı
+    -   Entity <-> DTO dönüşümlerini yapar.
+    -   Controller ve Service katmanlarını sadeleştirir.
+7.  Entity Katmanı
+    -   Veritabanı tablolarını temsil eder.
+    -   JPA anotasyonları ile yönetilir.
+8.  Security Katmanı
+    -   JWT tabanlı kimlik doğrulama.
+    -   Kullanıcı ve diyetisyen rolleri.
+9.  Tasarım Kalıpları Katmanı
+    -   Strategy, Facade, Factory, Observer, Template gibi yazılım
+        kalıpları.
+
+  -----------------------------------
+  2) ANA MODÜLLER VE SORUMLULUKLARI
+  -----------------------------------
+
+Aşağıdaki modüller LightLife’ın temel fonksiyonelliğini sağlar:
+
+2.1 Kullanıcı Yönetimi
+
+-   Kullanıcı kayıt ve giriş.
+-   Kullanıcı profil bilgileri.
+-   Şifreleme (PasswordEncoder).
+-   Kullanıcı–diyetisyen eşleştirme.
+
+2.2 Diyetisyen Yönetimi
+
+-   Diyetisyen kayıt & giriş.
+-   Uzmanlık alanlarının yönetimi.
+-   Hastaları görüntüleme ve tarif oluşturma.
+
+2.3 Diyet Tarifi Yönetimi
+
+-   Tarif oluşturma, görüntüleme.
+-   Yiyecek & malzeme ilişkilendirme.
+-   Tarif toplam kalorisi → malzeme kalorilerinden hesaplanır.
+
+2.4 Öğün Yönetimi
+
+-   Öğün ekleme.
+-   Öğüne tarif ekleme.
+-   Öğün–tarif–yiyecek bağlantılı kalori/makro hesaplama.
+
+2.5 Aktivite & Egzersiz Yönetimi
+
+-   Adım sayısından mesafe & kalori hesaplama.
+-   Günlük aktivite takibi.
+-   Egzersiz süreleri ve yakılan kalori.
+
+2.6 Kilo Yönetimi
+
+-   Günlük kilo kaydı.
+-   Haftalık kilo değişimi analizleri.
+
+2.7 Abonelik & Kampanya Sistemi
+
+-   Abonelik oluşturma, süre hesaplama.
+-   Kampanya türleri (yüzde indirim, tutar indirimi vb.).
+-   Abonelik ödeme onayı → aboneliği aktif hale getirir.
+
+2.8 Ödeme Modülü
+
+-   UUID işlem numarası üretimi.
+-   Ödeme yöntemi, tutar, tarih yönetimi.
+
+2.9 Bildirim Sistemi
+
+-   Bildirim oluşturma, okundu durumu.
+-   Observer & Factory kalıpları ile bildirim yönetimi.
+
+2.10 Destek Talebi Sistemi
+
+-   Kullanıcının destek talebi açması.
+-   Talep durum değişimi (Açık, Kapalı).
+
+2.11 Günlük & Haftalık Raporlama
+
+-   Öğün, egzersiz ve kilo bilgilerini birleştirerek rapor oluşturma.
+-   Makro (karbonhidrat, protein, yağ) ortalamaları.
+-   Kilo değişim grafiği için veriler.
+
+  -------------------------
+  3) ÖNEMLİ İŞ MANTIKLARI
+  -------------------------
+
+3.1 Kalori Hesaplaması
+
+-   Tarif toplam kalorisi = Sum(malzeme_gram * yiyecek_kalori / 100)
+-   Öğün kalorisi = tarif kalorisi * porsiyon
+-   Günlük toplam = tüm öğünlerin toplamı - yakılan kalori
+
+3.2 Adım Sayısından Mesafe Hesabı
+
+-   1 adım ≈ 0.00075 km
+-   6000 adım = 4.5 km
+
+3.3 Yakılan Kalori Hesabı
+
+-   1 adım ≈ 0.04 kcal
+-   6000 adım = 240 kcal
+
+3.4 Abonelik Süresi Hesabı
+
+-   Başlangıç = LocalDate.now()
+-   Bitiş = başlangıç + n ay
+
+3.5 Haftalık Rapor Hesaplamaları
+
+-   Gün gün toplam kaloriler ve yakılan kaloriler.
+-   Haftalık ortalama makrolar.
+-   Kilo değişimi = son kilo – ilk kilo.
+
+  --------------------------------
+  4) TASARIM KALIPLARI KULLANIMI
+  --------------------------------
+
+4.1 Strategy Pattern
+
+Kullanım yerleri: - Kampanya indirimi hesaplama. - Kullanıcının hedefe
+göre kalori hesaplaması.
+
+Avantajı: - Yeni stratejiler kolayca eklenebilir.
+
+4.2 Observer Pattern
+
+Kullanım yerleri: - Bildirim sisteminde olay tetikleme. - Diyetisyen ve
+kullanıcıya anlık bildirim.
+
+Avantajı: - Gevşek bağlı bildirim sistemi.
+
+4.3 Factory Pattern
+
+Kullanım yerleri: - Bildirim tipine göre sınıf üretme (Email, SMS,
+Push).
+
+Avantajı: - If/else yapısını ortadan kaldırır.
+
+4.4 Facade Pattern
+
+Kullanım yeri: - Günlük rapor hesaplama işlemlerini tek noktada toplar.
+
+4.5 Template Method
+
+Kullanım yeri: - Günlük ve haftalık raporlar için ortak işlem adımları.
+
+  ------------------------------
+  5) VERİTABANI TASARIMI ÖZETİ
+  ------------------------------
+
+Başlıca tablolar: - Kullanici - Diyetisyen - DiyetTarifi - Malzeme -
+Yiyecek - Ogun - OgunDiyetTarifi - Abonelik - Odeme - Aktivite -
+Egzersiz - Kampanya - DestekTalebi - Bildirim - Kilo
+
+Önemli ilişkiler: - Tarif ↔ Malzeme: One-to-Many - Yiyecek ↔ Malzeme:
+Many-to-One - Kullanici ↔ Ogun: One-to-Many - Ogun ↔ Tarif: Many-to-Many
+(OgunDiyetTarifi) - Kullanici ↔ Diyetisyen: Many-to-One - Abonelik ↔
+Odeme: One-to-Many
+
+  -----------------------------------------
+  6) KATMANLARIN BİRBİRİYLE ÇALIŞMA ŞEKLİ
+  -----------------------------------------
+
+Örnek akış: “Kullanıcı öğün ekliyor”
+
+1)  Controller → Request DTO alır.
+2)  ServiceImpl → Kullanıcı var mı kontrol eder.
+3)  ServiceImpl → Ogun oluşturur, repo.save() çağırır.
+4)  Mapper → Entity → Response DTO’ya çevirir.
+5)  Controller → Response DTO döner.
+
+Bu yapı projenin: - Temiz - Genişletilebilir - Test edilebilir - Bakımı
+kolay
+
+olmasını sağlar.
+
+  ------------------------
+  7) GÜVENLİK (SECURITY)
+  ------------------------
+
+-   JWT token üretimi ve doğrulaması.
+-   Parola hashing (PasswordEncoder).
+-   Yetkilendirme (Kullanıcı / Diyetisyen rolleri).
+-   Güvenli giriş süreçleri.
+
+  -----------------------------
+  8) PROJENİN TEMEL FAYDALARI
+  -----------------------------
+
+-   Kullanıcı sağlığı tek noktadan yönetilir.
+-   Diyetisyenlerle profesyonel danışmanlık sistemi vardır.
+-   Öğün, tarif, kalori takip sistemi oldukça detaylıdır.
+-   Haftalık analizler kullanıcı gelişimine rehber olur.
+-   Kampanya ve abonelik sistemi uygulamayı ticari hale getirir.
+-   Bildirim sistemiyle kullanıcı sürekli bilgilendirilir.
+
+------------------------------------------------------------------------
+
+Bu TXT dosyası LightLife projesinin teknik, mimari ve işlevsel tüm
+önemli bilgilerini içeren geniş kapsamlı bir özettir.
