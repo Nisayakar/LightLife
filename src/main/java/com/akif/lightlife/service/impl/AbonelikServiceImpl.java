@@ -11,10 +11,8 @@ import com.akif.lightlife.repository.AbonelikRepository;
 import com.akif.lightlife.repository.DiyetisyenRepository;
 import com.akif.lightlife.repository.KullaniciRepository;
 import com.akif.lightlife.service.AbonelikService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,7 +27,6 @@ public class AbonelikServiceImpl implements AbonelikService {
 
     @Override
     public AbonelikResponse abonelikOlustur(AbonelikOlusturRequest r) {
-
         Kullanici k = kullaniciRepo.findById(r.getKullaniciId())
                 .orElseThrow(() -> new NotFoundException("Kullanıcı bulunamadı"));
 
@@ -37,8 +34,7 @@ public class AbonelikServiceImpl implements AbonelikService {
                 .orElseThrow(() -> new NotFoundException("Diyetisyen bulunamadı"));
 
         LocalDate baslangic = LocalDate.now();
-        LocalDate bitis = baslangic.plusMonths(r.getSureAy());
-
+        
         Abonelik a = Abonelik.builder()
                 .kullanici(k)
                 .diyetisyen(d)
@@ -46,37 +42,28 @@ public class AbonelikServiceImpl implements AbonelikService {
                 .sureAy(r.getSureAy())
                 .aylikUcret(r.getAylikUcret())
                 .baslangicTarihi(baslangic)
-                .bitisTarihi(bitis)
-                .aktifMi(true)
+                .bitisTarihi(baslangic.plusMonths(r.getSureAy()))
+                .aktifMi(false) // Ödeme yapılana kadar FALSE olmalı
                 .build();
 
-        abonelikRepo.save(a);
-
-        return mapper.toResponse(a);
+        return mapper.toResponse(abonelikRepo.save(a));
     }
 
     @Override
     public List<AbonelikResponse> kullaniciAbonelikleri(Long kullaniciId) {
-
         Kullanici k = kullaniciRepo.findById(kullaniciId)
                 .orElseThrow(() -> new NotFoundException("Kullanıcı bulunamadı"));
 
-        return abonelikRepo.findByKullanici(k)
-                .stream()
-                .map(mapper::toResponse)
-                .toList();
+        return abonelikRepo.findByKullanici(k).stream()
+                .map(mapper::toResponse).toList();
     }
 
     @Override
     public AbonelikResponse abonelikIptal(Long abonelikId) {
-
         Abonelik a = abonelikRepo.findById(abonelikId)
                 .orElseThrow(() -> new NotFoundException("Abonelik bulunamadı"));
-
         a.setAktifMi(false);
         a.setBitisTarihi(LocalDate.now());
-        abonelikRepo.save(a);
-
-        return mapper.toResponse(a);
+        return mapper.toResponse(abonelikRepo.save(a));
     }
 }

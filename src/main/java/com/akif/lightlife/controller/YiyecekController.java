@@ -6,6 +6,8 @@ import com.akif.lightlife.dto.response.YiyecekResponse;
 import com.akif.lightlife.service.YiyecekService;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class YiyecekController {
     public YiyecekResponse getir(@PathVariable Long id) {
         return service.getir(id);
     }
-
+    
     @GetMapping
     public List<YiyecekResponse> listele() {
         return service.listele();

@@ -6,8 +6,9 @@ import lombok.Data;
 public class YiyecekKayitRequest {
 
     private String ad;
-    private int kalori;
-    private double karbonhidrat;
-    private double protein;
-    private double yag;
+    private Double kalori;
+    private Double karbonhidrat;
+    private Double protein;
+    private Double yag;
+    private Long diyetisyenId;
 }

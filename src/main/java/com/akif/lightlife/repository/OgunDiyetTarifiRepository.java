@@ -9,4 +9,8 @@ import java.util.List;
 public interface OgunDiyetTarifiRepository extends JpaRepository<OgunDiyetTarifi, Long> {
 
     List<OgunDiyetTarifi> findByOgun(Ogun ogun);
+
+    List<OgunDiyetTarifi> findByOgunId(Long ogunId);
+
+    List<OgunDiyetTarifi> findByOgunIn(List<Ogun> ogunler);
 }

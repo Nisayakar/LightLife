@@ -1,15 +1,14 @@
 package com.akif.lightlife.service;
 
-import java.util.List;
+import com.akif.lightlife.dto.request.OgunDiyetTarifiEkleRequest;
+import com.akif.lightlife.dto.response.OgunDiyetTarifiResponse;
 
-import com.akif.lightlife.dto.request.OgunTarifEkleRequest;
-import com.akif.lightlife.dto.response.OgunTarifResponse;
+import java.util.List;
 
 public interface OgunDiyetTarifiService {
 
-    OgunTarifResponse ekle(OgunTarifEkleRequest r);
+    OgunDiyetTarifiResponse tarifEkle(OgunDiyetTarifiEkleRequest request);
 
-    List<OgunTarifResponse> ogunTarifleri(Long ogunId);
-
-    void sil(Long id);
+   
+    List<OgunDiyetTarifiResponse> ogunTarifleri(Long ogunId);
 }

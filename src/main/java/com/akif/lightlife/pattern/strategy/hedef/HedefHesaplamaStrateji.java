@@ -1,5 +1,11 @@
 package com.akif.lightlife.pattern.strategy.hedef;
 
 public interface HedefHesaplamaStrateji {
-    int gunlukKalori(int mevcutKalori);
+
+    /**
+     * @param bazKalori           
+     * @param haftalikKiloDegisimKg  
+     * @return 
+     */
+    int gunlukKalori(double bazKalori, double haftalikKiloDegisimKg);
 }

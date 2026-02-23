@@ -1,24 +1,17 @@
 package com.akif.lightlife.service.impl;
 
-import com.akif.lightlife.dto.request.OgunKayitRequest;
-import com.akif.lightlife.dto.request.OgunTarifEkleRequest;
+import com.akif.lightlife.dto.request.OgunEkleRequest;
 import com.akif.lightlife.dto.response.OgunResponse;
-
-import com.akif.lightlife.entity.DiyetTarifi;
-import com.akif.lightlife.entity.Kullanici;
-import com.akif.lightlife.entity.Ogun;
-import com.akif.lightlife.entity.OgunDiyetTarifi;
-
+import com.akif.lightlife.entity.*;
+import com.akif.lightlife.enums.BildirimHedefTipi;
 import com.akif.lightlife.exception.NotFoundException;
-import com.akif.lightlife.mapper.OgunMapper;
-import com.akif.lightlife.repository.DiyetTarifiRepository;
-import com.akif.lightlife.repository.KullaniciRepository;
-import com.akif.lightlife.repository.OgunDiyetTarifiRepository;
-import com.akif.lightlife.repository.OgunRepository;
+import com.akif.lightlife.pattern.observer.BildirimMerkezi;
+import com.akif.lightlife.pattern.observer.BildirimOlayi;
+import com.akif.lightlife.repository.*;
 import com.akif.lightlife.service.OgunService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,66 +20,76 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OgunServiceImpl implements OgunService {
 
-    private final OgunRepository ogunRepo;
-    private final KullaniciRepository kullaniciRepo;
-    private final DiyetTarifiRepository tarifRepo;
-    private final OgunDiyetTarifiRepository odtRepo;
-    private final OgunMapper mapper;
+    private final OgunRepository ogunRepository;
+    private final KullaniciRepository kullaniciRepository;
+    private final DiyetTarifiRepository diyetTarifiRepository; // 🔥 EKLENDİ
+    private final OgunDiyetTarifiRepository ogunDiyetTarifiRepository; // 🔥 EKLENDİ
+    private final BildirimMerkezi bildirimMerkezi;
 
     @Override
-    public OgunResponse ogunEkle(OgunKayitRequest r) {
+    @Transactional // 🔥 ÖNEMLİ: İki tabloya birden kayıt yaptığı için atomik olmalı
+    public OgunResponse ogunEkle(OgunEkleRequest request) {
 
-        Kullanici k = kullaniciRepo.findById(r.getKullaniciId())
+        // 1. Kullanıcıyı bul
+        Kullanici danisan = kullaniciRepository.findById(request.getKullaniciId())
                 .orElseThrow(() -> new NotFoundException("Kullanıcı bulunamadı"));
 
-        Ogun o = Ogun.builder()
-                .kullanici(k)
-                .tip(r.getTip())
-                .tarih(LocalDate.now())
+        // 2. Tarifi bul (Eğer frontend'den tarifId gelmiyorsa hata verdirir)
+        DiyetTarifi tarif = diyetTarifiRepository.findById(request.getTarifId())
+                .orElseThrow(() -> new NotFoundException("Seçilen tarif bulunamadı"));
+
+        LocalDate tarih = request.getTarih() != null ? request.getTarih() : LocalDate.now();
+
+        // 3. ÖNCE ÖĞÜNÜ OLUŞTUR (SABAH, OGLE vb.)
+        Ogun ogun = Ogun.builder()
+                .kullanici(danisan)
+                .tarih(tarih)
+                .tip(request.getTip())
                 .build();
 
-        ogunRepo.save(o);
+        Ogun kaydedilenOgun = ogunRepository.save(ogun);
 
-        return mapper.toResponse(o);
-    }
-
-    @Override
-    public OgunResponse oguneTarifEkle(OgunTarifEkleRequest r) {
-
-        Ogun ogun = ogunRepo.findById(r.getOgunId())
-                .orElseThrow(() -> new NotFoundException("Öğün bulunamadı"));
-
-        DiyetTarifi tarif = tarifRepo.findById(r.getTarifId())
-                .orElseThrow(() -> new NotFoundException("Tarif bulunamadı"));
-
-        OgunDiyetTarifi odt = OgunDiyetTarifi.builder()
-                .ogun(ogun)
+        // 4. 🔥 KRİTİK ADIM: ÖĞÜNÜ SEÇİLEN TARİFLE BAĞLA (İçeriğin gözükmesini sağlayan yer)
+        OgunDiyetTarifi baglanti = OgunDiyetTarifi.builder()
+                .ogun(kaydedilenOgun)
                 .tarif(tarif)
-                .porsiyon(r.getPorsiyon())
+                .porsiyon(request.getPorsiyon() > 0 ? request.getPorsiyon() : 1)
                 .build();
 
-        odtRepo.save(odt);
+        ogunDiyetTarifiRepository.save(baglanti);
 
-        return mapper.toResponse(ogun);
+        // 5. 🔔 OBSERVER → DİYETİSYENE BİLDİR
+        if (danisan.getDiyetisyen() != null) {
+            bildirimMerkezi.bildir(
+                new BildirimOlayi(
+                    danisan.getDiyetisyen().getId(),
+                    "Yeni Öğün Kaydı",
+                    danisan.getAd() + " " + danisan.getSoyad() 
+                            + " menüsüne " + tarif.getAd() + " ekledi.", 
+                    BildirimHedefTipi.DIYETISYEN
+                )
+            );
+        }
+
+        return mapToResponse(kaydedilenOgun);
     }
 
     @Override
-    public OgunResponse ogunGetir(Long id) {
-        return mapper.toResponse(
-                ogunRepo.findById(id)
-                        .orElseThrow(() -> new NotFoundException("Öğün bulunamadı"))
-        );
-    }
-
-    @Override
-    public List<OgunResponse> kullanicininGunlukOgunleri(Long kullaniciId) {
-
-        Kullanici k = kullaniciRepo.findById(kullaniciId)
-                .orElseThrow(() -> new NotFoundException("Kullanıcı bulunamadı"));
-
-        return ogunRepo.findByKullaniciAndTarih(k, LocalDate.now())
+    public List<OgunResponse> bugunOgunleri(Long kullaniciId) {
+        LocalDate bugun = LocalDate.now();
+        return ogunRepository
+                .findByKullaniciIdAndTarih(kullaniciId, bugun)
                 .stream()
-                .map(mapper::toResponse)
+                .map(this::mapToResponse)
                 .toList();
+    }
+
+    private OgunResponse mapToResponse(Ogun ogun) {
+        return OgunResponse.builder()
+                .id(ogun.getId())
+                .kullaniciId(ogun.getKullanici().getId())
+                .tarih(ogun.getTarih())
+                .tip(ogun.getTip())
+                .build();
     }
 }

@@ -15,7 +15,7 @@ public class Malzeme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double gram;
+    private double gram; // örn: 150 gram tavuk
 
     @ManyToOne
     @JoinColumn(name = "yiyecek_id")
@@ -24,4 +24,21 @@ public class Malzeme {
     @ManyToOne
     @JoinColumn(name = "tarif_id")
     private DiyetTarifi tarif;
+
+    /**
+     * 🔥 Bu malzemenin toplam kalorisi (ör: 150g tavuk → ~225 kcal)
+     * Formül:
+     *   (yiyecek.kalori * gram) / 100
+     */
+    @Transient
+    public int getKalori() {
+        if (yiyecek == null || yiyecek.getKalori() <= 0) {
+            return 0;
+        }
+
+        // yiyecek.getKalori() → 100g için kalori
+        double hesap = (yiyecek.getKalori() * (gram / 100.0));
+
+        return (int) Math.round(hesap);
+    }
 }

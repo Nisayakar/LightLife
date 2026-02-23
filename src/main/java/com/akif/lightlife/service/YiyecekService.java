@@ -17,4 +17,5 @@ public interface YiyecekService {
     YiyecekResponse getir(Long id);
 
     List<YiyecekResponse> listele();
+    List<YiyecekResponse> getAll();
 }

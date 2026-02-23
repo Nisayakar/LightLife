@@ -9,7 +9,11 @@ public interface KampanyaService {
 
     KampanyaResponse olustur(KampanyaOlusturRequest request);
 
+    List<KampanyaResponse> tumKampanyalar();
+
+
     List<KampanyaResponse> aktifKampanyalar();
+
 
     List<KampanyaResponse> kategoriyeGore(String kategori);
 
@@ -18,4 +22,9 @@ public interface KampanyaService {
     KampanyaResponse kampanyaGetir(Long id);
 
     KampanyaResponse durumDegistir(Long id, boolean aktifMi);
+
+    void sil(Long id);
+
+
+    double indirimliTutarHesapla(Long kampanyaId, double tutar);
 }

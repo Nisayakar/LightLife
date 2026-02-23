@@ -10,4 +10,5 @@ public class OdemeYapRequest {
     private Long abonelikId;
     private BigDecimal tutar;
     private String odemeYontemi; 
+    private Long kampanyaId;
 }

@@ -3,24 +3,40 @@ package com.akif.lightlife.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.databind.node.BooleanNode;
+
+@Entity
+@Table(name = "kullanici_diyetisyen")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity 
-@Table(name = "kullanici_diyetisyen")
 public class KullaniciDiyetisyen {
-    @Id 
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToOne
-    @JoinColumn(name = "kullanici_id" , nullable = false)
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "kullanici_id")
     private Kullanici kullanici;
-    
-    @ManyToOne
-    @JoinColumn(name = "diyetisyen_id" , nullable = false)
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "diyetisyen_id")
     private Diyetisyen diyetisyen;
+
+    @Column(name = "baslama_tarihi", nullable = false)
+    private LocalDate baslamaTarihi = LocalDate.now();
+
+    @Column(name = "bitis_tarihi")
+    private LocalDate bitisTarihi;
     
-    private boolean aktif = true;
+    private Boolean aktif;
+
+	public void setAktif(boolean b) {
+		
+	}
 }

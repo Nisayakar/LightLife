@@ -1,13 +1,11 @@
 package com.akif.lightlife.service.impl;
 
-import com.akif.lightlife.dto.request.YiyecekKayitRequest;
 import com.akif.lightlife.dto.request.YiyecekGuncelleRequest;
+import com.akif.lightlife.dto.request.YiyecekKayitRequest;
 import com.akif.lightlife.dto.response.YiyecekResponse;
 import com.akif.lightlife.entity.Yiyecek;
-import com.akif.lightlife.mapper.YiyecekMapper;
 import com.akif.lightlife.repository.YiyecekRepository;
 import com.akif.lightlife.service.YiyecekService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +16,9 @@ import java.util.List;
 public class YiyecekServiceImpl implements YiyecekService {
 
     private final YiyecekRepository repo;
-    private final YiyecekMapper mapper;
 
     @Override
     public YiyecekResponse ekle(YiyecekKayitRequest r) {
-
-        if (repo.existsByAd(r.getAd())) {
-            throw new RuntimeException("Bu yiyecek zaten kayıtlı.");
-        }
 
         Yiyecek y = Yiyecek.builder()
                 .ad(r.getAd())
@@ -35,45 +28,80 @@ public class YiyecekServiceImpl implements YiyecekService {
                 .yag(r.getYag())
                 .build();
 
-        repo.save(y);
+        y = repo.save(y);
 
-        return mapper.toResponse(y);
+        return toResponse(y);
     }
 
     @Override
-    public YiyecekResponse guncelle(Long id, YiyecekGuncelleRequest r) {
+    public List<YiyecekResponse> getAll() {
+        return repo.findAll().stream()
+                .map(this::toResponse)
+                .toList();
+    }
 
-        Yiyecek y = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Yiyecek bulunamadı"));
+    @Override
+    public YiyecekResponse guncelle(Long id, YiyecekGuncelleRequest request) {
 
-        y.setAd(r.getAd());
-        y.setKalori(r.getKalori());
-        y.setKarbonhidrat(r.getKarbonhidrat());
-        y.setProtein(r.getProtein());
-        y.setYag(r.getYag());
+        Yiyecek yiyecek = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Yiyecek bulunamadı (id=" + id + ")"));
 
-        repo.save(y);
+      
+        if (request.getAd() != null) {
+            yiyecek.setAd(request.getAd());
+        }
+        if (request.getKalori() != null) {
+            yiyecek.setKalori(request.getKalori());
+        }
+        if (request.getKarbonhidrat() != null) {
+            yiyecek.setKarbonhidrat(request.getKarbonhidrat());
+        }
+        if (request.getProtein() != null) {
+            yiyecek.setProtein(request.getProtein());
+        }
+        if (request.getYag() != null) {
+            yiyecek.setYag(request.getYag());
+        }
 
-        return mapper.toResponse(y);
+        yiyecek = repo.save(yiyecek);
+
+        return toResponse(yiyecek);
     }
 
     @Override
     public void sil(Long id) {
+     
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("Silinecek yiyecek bulunamadı (id=" + id + ")");
+        }
         repo.deleteById(id);
     }
 
     @Override
     public YiyecekResponse getir(Long id) {
-        return repo.findById(id)
-                .map(mapper::toResponse)
-                .orElseThrow(() -> new RuntimeException("Yiyecek bulunamadı"));
+        Yiyecek yiyecek = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Yiyecek bulunamadı (id=" + id + ")"));
+
+        return toResponse(yiyecek);
     }
 
     @Override
     public List<YiyecekResponse> listele() {
-        return repo.findAll()
-                .stream()
-                .map(mapper::toResponse)
+      
+        return repo.findAll().stream()
+                .map(this::toResponse)
                 .toList();
+    }
+
+ 
+    private YiyecekResponse toResponse(Yiyecek y) {
+        return YiyecekResponse.builder()
+                .id(y.getId())
+                .ad(y.getAd())
+                .kalori(y.getKalori())
+                .karbonhidrat(y.getKarbonhidrat())
+                .protein(y.getProtein())
+                .yag(y.getYag())
+                .build();
     }
 }

@@ -5,9 +5,10 @@ import com.akif.lightlife.dto.response.KampanyaResponse;
 import com.akif.lightlife.entity.Kampanya;
 import com.akif.lightlife.exception.NotFoundException;
 import com.akif.lightlife.mapper.KampanyaMapper;
+import com.akif.lightlife.pattern.strategy.kampanya.KampanyaStratejiSecici;
+import com.akif.lightlife.pattern.strategy.kampanya.KampanyaStratejisi;
 import com.akif.lightlife.repository.KampanyaRepository;
 import com.akif.lightlife.service.KampanyaService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +37,15 @@ public class KampanyaServiceImpl implements KampanyaService {
                 .build();
 
         repo.save(k);
-
         return mapper.toResponse(k);
+    }
+
+    @Override
+    public List<KampanyaResponse> tumKampanyalar() {
+        return repo.findAll()
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
     }
 
     @Override
@@ -68,7 +76,6 @@ public class KampanyaServiceImpl implements KampanyaService {
     public KampanyaResponse kampanyaGetir(Long id) {
         Kampanya k = repo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Kampanya bulunamadı"));
-
         return mapper.toResponse(k);
     }
 
@@ -81,5 +88,30 @@ public class KampanyaServiceImpl implements KampanyaService {
         repo.save(k);
 
         return mapper.toResponse(k);
+    }
+
+    @Override
+    public void sil(Long id) {
+        repo.deleteById(id);
+    }
+
+    @Override
+    public double indirimliTutarHesapla(Long kampanyaId, double tutar) {
+
+        Kampanya k = repo.findById(kampanyaId)
+                .orElseThrow(() -> new NotFoundException("Kampanya bulunamadı"));
+
+        if (!k.isAktifMi() || !tarihUygunMu(k)) {
+            return tutar;
+        }
+
+        KampanyaStratejisi strateji = KampanyaStratejiSecici.stratejiSec(k);
+        return strateji.indirimUygula(tutar);
+    }
+
+    private boolean tarihUygunMu(Kampanya k) {
+        LocalDate today = LocalDate.now();
+        return !today.isBefore(k.getBaslangicTarihi())
+                && !today.isAfter(k.getBitisTarihi());
     }
 }

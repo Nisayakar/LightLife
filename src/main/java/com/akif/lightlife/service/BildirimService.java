@@ -14,4 +14,6 @@ public interface BildirimService {
     List<BildirimResponse> okunmamisBildirimler(Long kullaniciId);
 
     BildirimResponse okunduYap(Long id);
+    void tumunuOkunduYap(Long kullaniciId);
+   
 }

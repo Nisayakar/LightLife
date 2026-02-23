@@ -5,6 +5,8 @@ import com.akif.lightlife.dto.response.BildirimResponse;
 import com.akif.lightlife.service.BildirimService;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,4 +37,12 @@ public class BildirimController {
     public BildirimResponse okundu(@PathVariable Long id) {
         return service.okunduYap(id);
     }
+    
+    @PutMapping("/kullanici/{kullaniciId}/okundu")
+    public ResponseEntity<Void> tumunuOkunduYap(@PathVariable Long kullaniciId) {
+        service.tumunuOkunduYap(kullaniciId);
+        return ResponseEntity.ok().build();
+    }
+
+
 }

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class DiyetisyenGirisRequest {
-	private String email;
-	private String sifre;
+    private String email;
+    private String sifre;
 }

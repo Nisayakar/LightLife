@@ -11,9 +11,10 @@ import java.util.List;
 public class OgunResponse {
 
     private Long id;
-    private String tip;
-    private LocalDate tarih;
     private Long kullaniciId;
+    private LocalDate tarih;
+    private String tip;
 
-    private List<OgunTarifResponse> tarifler;
+    // Bu öğünün içindeki tüm tarifleri (porsiyon + tarif adı ile birlikte döner)
+    private List<OgunDiyetTarifiResponse> tarifler;
 }

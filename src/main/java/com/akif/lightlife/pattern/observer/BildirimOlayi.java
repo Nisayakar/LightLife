@@ -1,8 +1,10 @@
 package com.akif.lightlife.pattern.observer;
 
+import com.akif.lightlife.enums.BildirimHedefTipi;
+
 public record BildirimOlayi(
-        Long kullaniciId,
-        String hedef,
+        Long hedefId,
         String baslik,
-        String mesaj
+        String mesaj,
+        BildirimHedefTipi hedefTipi
 ) {}

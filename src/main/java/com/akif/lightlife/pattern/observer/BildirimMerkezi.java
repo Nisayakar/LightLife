@@ -1,21 +1,22 @@
 package com.akif.lightlife.pattern.observer;
 
-import java.util.ArrayList;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class BildirimMerkezi {
 
-    private final List<BildirimObserver> observerList = new ArrayList<>();
+    private final List<BildirimObserver> observerList;
 
-    public void ekle(BildirimObserver observer) {
-        observerList.add(observer);
+
+    public BildirimMerkezi(List<BildirimObserver> observerList) {
+        this.observerList = observerList;
     }
 
-    public void sil(BildirimObserver observer) {
-        observerList.remove(observer);
-    }
-
-    public void yayinla(BildirimOlayi olay) {
-        observerList.forEach(o -> o.bildir(olay));
+    public void bildir(BildirimOlayi olay) {
+        for (BildirimObserver observer : observerList) {
+            observer.bildir(olay);
+        }
     }
 }

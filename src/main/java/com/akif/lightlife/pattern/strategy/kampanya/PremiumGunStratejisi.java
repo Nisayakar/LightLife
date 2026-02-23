@@ -2,15 +2,24 @@ package com.akif.lightlife.pattern.strategy.kampanya;
 
 public class PremiumGunStratejisi implements KampanyaStratejisi {
 
-    private final int gun;
+    private final int bedavaGunSayisi; 
 
-    public PremiumGunStratejisi(int gun) {
-        this.gun = gun;
+    public PremiumGunStratejisi(int bedavaGunSayisi) {
+        this.bedavaGunSayisi = bedavaGunSayisi;
     }
 
     @Override
     public double indirimUygula(double tutar) {
-        double gunIndirim = gun * 5; // günlük 5 TL indirim mantığı
-        return Math.max(0, tutar - gunIndirim);
+      
+        int toplamGun = 30;
+        if (bedavaGunSayisi <= 0 || bedavaGunSayisi >= toplamGun) {
+            return 0;
+        }
+
+        double gunlukUcret = tutar / toplamGun;
+        double indirim = gunlukUcret * bedavaGunSayisi;
+
+        double sonuc = tutar - indirim;
+        return Math.max(sonuc, 0);
     }
 }

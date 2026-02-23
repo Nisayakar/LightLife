@@ -15,6 +15,7 @@ public class OgunDiyetTarifi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Kullanıcı 1 porsiyon, 2 porsiyon gibi ekler
     private int porsiyon;
 
     @ManyToOne
@@ -24,4 +25,11 @@ public class OgunDiyetTarifi {
     @ManyToOne
     @JoinColumn(name = "tarif_id")
     private DiyetTarifi tarif;
+
+    // 🔥 Bu alan artık DB'de tutulmuyor → otomatik hesaplanıyor
+    @Transient
+    public int getToplamKalori() {
+        if (tarif == null) return 0;
+        return tarif.getToplamKalori() * porsiyon;
+    }
 }

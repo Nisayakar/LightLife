@@ -1,24 +1,35 @@
 package com.akif.lightlife.mapper;
 
-import org.springframework.stereotype.Component;
-
 import com.akif.lightlife.dto.response.MalzemeResponse;
+import com.akif.lightlife.entity.KaloriHesaplayici;
 import com.akif.lightlife.entity.Malzeme;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
 @Component
+@RequiredArgsConstructor
 public class MalzemeMapper {
 
-	public MalzemeResponse toResponse(Malzeme m) {
+    private final KaloriHesaplayici kaloriHesaplayici;
 
-	    int kalori = (int) ((m.getYiyecek().getKalori() / 100.0) * m.getGram());
+    public MalzemeResponse toResponse(Malzeme m) {
+        if (m == null) {
+            return null;
+        }
 
-	    return MalzemeResponse.builder()
-	            .id(m.getId())
-	            .yiyecekAd(m.getYiyecek().getAd())  
-	            .gram(m.getGram())
-	            .kalori(kalori)
-	            .build();
-	}
+        int kalori = kaloriHesaplayici.malzemeKalori(m);
 
+        String yiyecekAd = null;
+        if (m.getYiyecek() != null) {
+            yiyecekAd = m.getYiyecek().getAd();
+        }
 
+        return MalzemeResponse.builder()
+                .id(m.getId())
+                .yiyecekAd(yiyecekAd)
+                .gram(m.getGram())
+                .kalori(kalori)
+                .build();
+    }
 }

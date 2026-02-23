@@ -7,5 +7,5 @@ public interface RaporService {
 
     GunlukRaporResponse gunlukRapor(Long kullaniciId);
 
-    HaftalikRaporResponse haftalikRapor(Long id);
+    HaftalikRaporResponse haftalikRapor(Long kullaniciId);
 }

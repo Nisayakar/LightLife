@@ -1,7 +1,6 @@
 package com.akif.lightlife.controller;
 
-import com.akif.lightlife.dto.request.OgunKayitRequest;
-import com.akif.lightlife.dto.request.OgunTarifEkleRequest;
+import com.akif.lightlife.dto.request.OgunEkleRequest;
 import com.akif.lightlife.dto.response.OgunResponse;
 import com.akif.lightlife.service.OgunService;
 import lombok.RequiredArgsConstructor;
@@ -14,25 +13,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OgunController {
 
-    private final OgunService service;
+    private final OgunService ogunService;
 
     @PostMapping("/ekle")
-    public OgunResponse ekle(@RequestBody OgunKayitRequest r) {
-        return service.ogunEkle(r);
+    public OgunResponse ogunEkle(@RequestBody OgunEkleRequest request) {
+        return ogunService.ogunEkle(request);
     }
 
-    @PostMapping("/tarif-ekle")
-    public OgunResponse tarifEkle(@RequestBody OgunTarifEkleRequest r) {
-        return service.oguneTarifEkle(r);
-    }
-
-    @GetMapping("/{id}")
-    public OgunResponse getir(@PathVariable Long id) {
-        return service.ogunGetir(id);
-    }
-
-    @GetMapping("/gunluk/{kullaniciId}")
-    public List<OgunResponse> gunluk(@PathVariable Long kullaniciId) {
-        return service.kullanicininGunlukOgunleri(kullaniciId);
+    @GetMapping("/bugun/{kullaniciId}")
+    public List<OgunResponse> bugunOgunleri(@PathVariable Long kullaniciId) {
+        return ogunService.bugunOgunleri(kullaniciId);
     }
 }

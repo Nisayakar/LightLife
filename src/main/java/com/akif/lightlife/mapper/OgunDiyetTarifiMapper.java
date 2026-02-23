@@ -1,23 +1,34 @@
 package com.akif.lightlife.mapper;
 
-import org.springframework.stereotype.Component;
-
-import com.akif.lightlife.dto.response.OgunTarifResponse;
+import com.akif.lightlife.dto.response.OgunDiyetTarifiResponse;
+import com.akif.lightlife.entity.DiyetTarifi;
 import com.akif.lightlife.entity.OgunDiyetTarifi;
+import org.springframework.stereotype.Component;
 
 @Component
 public class OgunDiyetTarifiMapper {
 
-    public OgunTarifResponse toResponse(OgunDiyetTarifi o) {
+    public OgunDiyetTarifiResponse toResponse(OgunDiyetTarifi t) {
 
-        int toplamKalori = o.getPorsiyon() * o.getTarif().getToplamKalori();
+        Long ogunId = t.getOgun() != null ? t.getOgun().getId() : null;
+        DiyetTarifi tarif = t.getTarif();
+        Long tarifId = tarif != null ? tarif.getId() : null;
+        String tarifAdi = tarif != null ? tarif.getAd() : null;
 
-        return OgunTarifResponse.builder()
-                .id(o.getId())
-                .tarifId(o.getTarif().getId())
-                .tarifAd(o.getTarif().getAd())
-                .porsiyon(o.getPorsiyon())
-                .toplamKalori(toplamKalori)
+        Integer tarifKalori = null;
+        if (tarif != null) {
+            // DiyetTarifi.toplamKalori muhtemelen "int"
+            // null olamayacağı için sadece tarif null değilse çarpıyoruz
+            tarifKalori = tarif.getToplamKalori() * t.getPorsiyon();
+        }
+
+        return OgunDiyetTarifiResponse.builder()
+                .id(t.getId())
+                .ogunId(ogunId)
+                .tarifId(tarifId)
+                .porsiyon(t.getPorsiyon())
+                .tarifAdi(tarifAdi)
+                .tarifKalori(tarifKalori)
                 .build();
     }
 }

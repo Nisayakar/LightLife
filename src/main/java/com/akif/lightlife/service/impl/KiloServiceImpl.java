@@ -19,7 +19,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class KiloServiceImpl implements KiloService {
-
     private final KiloRepository kiloRepo;
     private final KullaniciRepository kullaniciRepo;
     private final KiloMapper mapper;

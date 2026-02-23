@@ -1,12 +1,444 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="h-full bg-[#0a0a0a]">
 <head>
     <meta charset="UTF-8">
-    <title>LightLife</title>
+    <title>LightLife - Elite Wellness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+           
+            --deep-black: #0a0a0a;       
+            --bg-input-dark: rgba(20, 20, 20, 0.8); 
+            
+         
+            --green-bright-1: #059669; 
+            --green-bright-2: #10b981; 
+            --green-bright-3: #34d399; 
+
+            --text-light: #F3F4F6;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-light);
+            background-color: var(--deep-black);
+        }
+
+        h1, h2, h3, .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+     
+        .luxury-input {
+            width: 100%;
+            background-color: var(--bg-input-dark);
+            border: 1px solid #333; /* SARI ÇERÇEVE GİTTİ -> GRİ GELDİ */
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        .luxury-input::placeholder { color: rgba(255,255,255,0.4); transition: color 0.3s;}
+        .luxury-input:focus {
+            outline: none;
+            border-color: var(--green-bright-2); /* Odaklanınca yeşil */
+            box-shadow: 0 0 20px -5px rgba(16, 185, 129, 0.3);
+            background-color: black;
+        }
+
+
+        .btn-luxury-green {
+            background: linear-gradient(135deg, var(--green-bright-1), var(--green-bright-2), var(--green-bright-3));
+            color: white;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.4s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            border: none;
+            box-shadow: 0 5px 15px -5px rgba(16, 185, 129, 0.5);
+        }
+        .btn-luxury-green:hover {
+            background: linear-gradient(135deg, var(--green-bright-3), var(--green-bright-2), var(--green-bright-1));
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.7);
+        }
+
+  
+        .tab-container {
+            background: rgba(255,255,255,0.03);
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid #333; /* SARI ÇERÇEVE GİTTİ */
+            display: flex;
+        }
+        .tab-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 500;
+            transition: all 0.3s;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        .tab-btn.active {
+            background-color: var(--green-bright-2);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 10px -3px rgba(16, 185, 129, 0.5);
+        }
+        .tab-btn:hover:not(.active) {
+            color: white;
+            background: rgba(255,255,255,0.05);
+        }
+
+      
+        .fade-enter { animation: fadeEnter 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        @keyframes fadeEnter { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hidden-area { display: none; }
+    </style>
 </head>
-<body>
-    <h1>✅ LightLife Backend Başarıyla Çalışıyor</h1>
-    <p>Security kapalı ✅</p>
-    <p>API kullanıma hazır ✅</p>
+<body class="h-full flex overflow-hidden">
+
+    <div class="hidden lg:flex w-1/2 relative overflow-hidden bg-[#050505] flex-col justify-end p-12">
+        <img src="https://media.istockphoto.com/id/1433432507/tr/foto%C4%9Fraf/healthy-eating-plate-with-vegan-or-vegetarian-food-in-woman-hands-healthy-plant-based-diet.jpg?s=612x612&w=0&k=20&c=-it98lxHC8h7MgWOeE0lv5ZSN1ZnX0xCuO2UKD8GbMA=" 
+             alt="Healthy Eating" 
+             class="absolute inset-0 w-full h-full object-cover opacity-70 hover:opacity-80 transition-all duration-1000 scale-105 hover:scale-100">
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent"></div>
+        
+        <div class="relative z-10 text-left">
+            <h1 class="text-5xl xl:text-6xl font-bold text-white mb-4 serif-font tracking-wide drop-shadow-lg">
+                Sağlığın Zirve<br>Noktası.
+            </h1>
+            <p class="text-lg text-gray-200 font-light max-w-md leading-relaxed tracking-wider">
+                LightLife ile bedeninizin en seçkin versiyonuna ulaşın. Kişiselleştirilmiş lüks sağlık deneyimi.
+            </p>
+        </div>
+    </div>
+
+    <div class="w-full lg:w-1/2 h-full overflow-y-auto bg-[#0a0a0a] relative scroll-smooth">
+        
+        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--green-bright-2)] to-transparent opacity-50 z-20"></div>
+
+        <div class="min-h-full flex flex-col justify-center px-6 py-12 md:px-16 fade-enter">
+            
+            <div class="w-full max-w-md mx-auto">
+            
+                <div class="lg:hidden text-center mb-10">
+                    <h1 class="text-4xl font-bold text-white serif-font tracking-wider">LightLife</h1>
+                    <p class="text-gray-400 text-sm uppercase tracking-[0.2em] mt-2">Elite Wellness Club</p>
+                </div>
+
+                <div class="mb-12">
+                    <label class="text-xs text-gray-400 uppercase tracking-[0.25em] font-medium mb-4 block text-center opacity-80">Hesap Türü Seçin</label>
+                    <div class="tab-container">
+                        <button id="role-user" onclick="setRole('user')" class="tab-btn active">Kullanıcı</button>
+                        <button id="role-dietitian" onclick="setRole('dietitian')" class="tab-btn">Diyetisyen</button>
+                    </div>
+                </div>
+
+                <div class="mb-10">
+                    <h2 id="form-title" class="text-4xl font-bold text-white serif-font mb-8 text-center">
+                        Hoşgeldiniz
+                    </h2>
+
+                    <div class="flex border-b border-gray-800">
+                        <button id="action-login" onclick="setAction('login')" class="flex-1 pb-4 text-sm font-medium uppercase tracking-wider border-b-2 text-white border-white transition-all">
+                            Giriş Yap
+                        </button>
+                        <button id="action-signup" onclick="setAction('signup')" class="flex-1 pb-4 text-sm font-medium uppercase tracking-wider text-gray-500 border-b-2 border-transparent hover:text-white transition-all">
+                            Kayıt Ol
+                        </button>
+                    </div>
+                </div>
+
+                <div class="min-h-[380px]">
+                    
+                    <div id="form-user-login" class="form-section fade-enter">
+                        <p class="text-gray-400 text-sm mb-8 font-light tracking-wide">Kullanıcı hesabınıza erişim sağlayın.</p>
+                        <div class="space-y-6">
+                            <input id="g_email" type="email" class="luxury-input" placeholder="E-posta Adresi">
+                            <input id="g_sifre" type="password" class="luxury-input" placeholder="Şifre">
+                            <button id="btnKullaniciGiris" onclick="kullaniciGiris(event)" class="btn-luxury-green w-full mt-2">Giriş Yap</button>
+                        </div>
+                    </div>
+
+                    <div id="form-user-signup" class="form-section hidden-area fade-enter">
+                        <p class="text-gray-400 text-sm mb-8 font-light tracking-wide">Ayrıcalıklı sağlıklı yaşam yolculuğunuza başlayın.</p>
+                        <div class="space-y-5">
+                            <div class="grid grid-cols-2 gap-5">
+                                <input id="k_ad" class="luxury-input" placeholder="İsim">
+                                <input id="k_soyad" class="luxury-input" placeholder="Soyisim">
+                            </div>
+                            <input id="k_email" type="email" class="luxury-input" placeholder="E-posta Adresi">
+                            <input id="k_tel" class="luxury-input" placeholder="Telefon Numarası">
+                            <input id="k_sifre" type="password" class="luxury-input" placeholder="Güçlü Şifre Belirleyin">
+                            <button id="btnKullaniciKayit" onclick="kullaniciKayit(event)" class="btn-luxury-green w-full mt-4">Üyelik Oluştur</button>
+                        </div>
+                    </div>
+
+                    <div id="form-dietitian-login" class="form-section hidden-area fade-enter">
+                         <p class="text-gray-400 text-sm mb-8 font-light flex items-center gap-2 tracking-wide">
+                            <span class="text-emerald-400">✨</span> Uzman paneline güvenli giriş.
+                        </p>
+                        <div class="space-y-6">
+                            <input id="dg_email" type="email" class="luxury-input" placeholder="Kurumsal E-posta">
+                            <input id="dg_sifre" type="password" class="luxury-input" placeholder="Şifre">
+                            <button id="btnDiyetisyenGiris" onclick="diyetisyenGiris(event)" class="btn-luxury-green w-full mt-2">Panele Git</button>
+                        </div>
+                    </div>
+
+                     <div id="form-dietitian-signup" class="form-section hidden-area fade-enter">
+                        <p class="text-gray-400 text-sm mb-8 font-light flex items-center gap-2 tracking-wide">
+                            <span class="text-emerald-400">✨</span> Profesyonel ağımıza katılım başvurusu.
+                        </p>
+                        <div class="space-y-5">
+                            <div class="grid grid-cols-2 gap-5">
+                                <input id="d_ad" class="luxury-input" placeholder="Ad">
+                                <input id="d_soyad" class="luxury-input" placeholder="Soyad">
+                            </div>
+                            <input id="d_email" type="email" class="luxury-input" placeholder="Kurumsal E-posta">
+                             <div class="grid grid-cols-2 gap-5">
+                                <input id="d_tel" class="luxury-input" placeholder="Telefon">
+                                <input id="d_deneyim" type="number" class="luxury-input" placeholder="Deneyim (Yıl)">
+                            </div>
+                            <input id="d_uzmanlik" class="luxury-input" placeholder="Uzmanlık Alanı">
+                            <input id="d_sifre" type="password" class="luxury-input" placeholder="Şifre Belirleyin">
+                            <button id="btnDiyetisyenKayit" onclick="diyetisyenKayit(event)" class="btn-luxury-green w-full mt-4">Başvuruyu Tamamla</button>
+                        </div>
+                    </div>
+
+                </div> 
+
+                <div class="mt-8 text-center text-sm min-h-[24px]">
+                    <span id="form-result" class="text-emerald-400"></span>
+                </div>
+
+                <p class="text-center mt-12 text-xs text-gray-600 uppercase tracking-[0.3em] opacity-70">© 2025 LightLife Elite.</p>
+            
+            </div>
+        </div>
+    </div>
+
+    <div id="globalMessage" class="hidden fixed bottom-8 right-8 z-50 px-8 py-5 rounded-lg shadow-2xl border border-[var(--green-bright-2)] bg-[#141414] text-sm font-medium flex items-center gap-4 transition-all transform translate-y-10 opacity-0"></div>
+
+<script>
+    'use strict';
+    const API_BASE = '';
+    
+ 
+    let currentRole = 'user';
+    let currentAction = 'login';
+
+    function buildUrl(path) { return API_BASE + path; }
+
+    function updateFormVisibility() {
+        document.querySelectorAll('.form-section').forEach(el => el.classList.add('hidden-area'));
+        document.getElementById('form-result').textContent = '';
+
+        const targetFormId = `form-${currentRole}-${currentAction}`;
+        const targetForm = document.getElementById(targetFormId);
+        if(targetForm) {
+            targetForm.classList.remove('hidden-area');
+            targetForm.classList.remove('fade-enter');
+            void targetForm.offsetWidth;
+            targetForm.classList.add('fade-enter');
+        }
+        
+        const titleEl = document.getElementById('form-title');
+        if (currentAction === 'login') {
+            titleEl.innerHTML = currentRole === 'user' ? "Tekrar Hoşgeldiniz" : "Uzman Girişi";
+        } else {
+             titleEl.innerHTML = currentRole === 'user' ? "Yeni Üyelik" : "Uzman Başvurusu";
+        }
+    }
+
+    function setRole(role) {
+        currentRole = role;
+        document.getElementById('role-user').classList.toggle('active', role === 'user');
+        document.getElementById('role-dietitian').classList.toggle('active', role === 'dietitian');
+        updateFormVisibility();
+    }
+
+    function setAction(action) {
+        currentAction = action;
+        const loginBtn = document.getElementById('action-login');
+        const signupBtn = document.getElementById('action-signup');
+        
+
+        if (action === 'login') {
+            loginBtn.style.color = '#ffffff';
+            loginBtn.style.borderColor = '#ffffff';
+            signupBtn.style.color = '#6b7280'; 
+            signupBtn.style.borderColor = 'transparent';
+        } else {
+            signupBtn.style.color = '#ffffff';
+            signupBtn.style.borderColor = '#ffffff';
+            loginBtn.style.color = '#6b7280';
+            loginBtn.style.borderColor = 'transparent';
+        }
+        updateFormVisibility();
+    }
+
+    function showMessage(msg, type = 'error') {
+        const box = document.getElementById('globalMessage');
+        if (!box) return;
+
+        const icon = type === 'success' ? '✨' : '';
+        box.innerHTML = `<span class="text-xl" style="color: var(--green-bright-2)">${icon}</span><span class="${type === 'success' ? 'text-white' : 'text-rose-400'}">${msg}</span>`;
+        
+        box.classList.remove('hidden');
+        requestAnimationFrame(() => { box.classList.remove('translate-y-10', 'opacity-0'); });
+        setTimeout(() => {
+            box.classList.add('translate-y-10', 'opacity-0');
+            setTimeout(() => box.classList.add('hidden'), 500);
+        }, 4000);
+    }
+
+   
+
+    async function apiFetch(path, options = {}) {
+        const url = buildUrl(path);
+        options.headers = { 'Accept': 'application/json', ...(options.headers || {}) };
+        try {
+            const res = await fetch(url, options);
+            let data = null;
+            try { data = await res.json(); } catch (_) { data = null; }
+            return {res, data};
+        } catch (e) { return {res: {ok: false, status: 0}, data: e.message}; }
+    }
+
+    function extractError(data, res) {
+        if (!data) return `Hata: ${res.status}`;
+        return data.mesaj || data.error || data.message || `Hata: ${res.status}`;
+    }
+
+    function setLoading(btnId, isLoading) {
+        const btn = document.getElementById(btnId);
+        if(!btn) return;
+        if(isLoading) {
+            btn.dataset.ogText = btn.innerText;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="inline-block animate-pulse">İşleniyor...</span>`;
+            btn.style.opacity = '0.8';
+        } else {
+            btn.innerText = btn.dataset.ogText;
+            btn.disabled = false;
+            btn.style.opacity = '1';
+        }
+    }
+
+    function showResult(msg, isError = false) {
+        const resEl = document.getElementById('form-result');
+        resEl.textContent = msg;
+      
+        resEl.style.color = isError ? '#fb7185' : 'var(--green-bright-2)';
+    }
+
+ 
+
+    async function kullaniciKayit(ev) {
+        ev?.preventDefault?.();
+        const inputs = ['k_ad', 'k_soyad', 'k_email', 'k_tel', 'k_sifre'].map(id => document.getElementById(id).value.trim());
+        if (inputs.some(val => !val)) { showMessage('Lütfen tüm alanları doldurunuz.'); return; }
+        if (inputs[4].length < 6) { showMessage('Şifre en az 6 karakter olmalı.'); return; }
+
+        setLoading('btnKullaniciKayit', true);
+        const {res, data} = await apiFetch('/api/v1/kullanicilar/kayit', {
+            method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ ad: inputs[0], soyad: inputs[1], email: inputs[2], telefon: inputs[3], sifre: inputs[4] })
+        });
+        setLoading('btnKullaniciKayit', false);
+
+        if (!res.ok) { showMessage(extractError(data, res)); showResult('Kayıt başarısız.', true); }
+        else {
+            showMessage('Aramıza hoşgeldiniz! Giriş yapabilirsin.', 'success');
+            showResult('Kayıt başarılı. Lütfen giriş yapın.');
+            document.querySelectorAll('#form-user-signup input').forEach(i => i.value = '');
+            setTimeout(() => setAction('login'), 1500);
+        }
+    }
+
+    async function kullaniciGiris(ev) {
+        ev?.preventDefault?.();
+        const [email, sifre] = ['g_email', 'g_sifre'].map(id => document.getElementById(id).value.trim());
+        if (!email || !sifre) { showMessage('E-posta ve şifre gerekli.'); return; }
+
+        setLoading('btnKullaniciGiris', true);
+        const {res, data} = await apiFetch('/api/v1/kullanicilar/giris', {
+            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email, sifre })
+        });
+        setLoading('btnKullaniciGiris', false);
+
+        if (!res.ok) { showMessage(extractError(data, res)); showResult('Giriş yapılamadı.', true); }
+        else if (data?.id) {
+            localStorage.setItem('lightlifeUser', JSON.stringify(data));
+            localStorage.removeItem('lightlifeDietitian');
+            window.location.href = '/user-dashboard.html';
+        } else { showMessage('Hata: ID alınamadı.'); }
+    }
+
+    async function diyetisyenKayit(ev) {
+        ev?.preventDefault?.();
+        const inputs = ['d_ad', 'd_soyad', 'd_email', 'd_tel', 'd_uzmanlik', 'd_deneyim', 'd_sifre'].map(id => document.getElementById(id).value.trim());
+        if (inputs.some(val => !val)) { showMessage('Tüm alanları doldurunuz.'); return; }
+        
+        setLoading('btnDiyetisyenKayit', true);
+        const {res, data} = await apiFetch('/api/v1/diyetisyen/kayit', {
+            method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ ad: inputs[0], soyad: inputs[1], email: inputs[2], telefon: inputs[3], uzmanlik: inputs[4], deneyimYili: Number(inputs[5]), sifre: inputs[6] })
+        });
+        setLoading('btnDiyetisyenKayit', false);
+
+        if (!res.ok) { showMessage(extractError(data, res)); showResult('Başvuru başarısız.', true); }
+        else {
+            showMessage('Uzman başvurunuz alındı.', 'success');
+            showResult('Kayıt başarılı. Panele giriş yapabilirsiniz.');
+            document.querySelectorAll('#form-dietitian-signup input').forEach(i => i.value = '');
+            setTimeout(() => setAction('login'), 1500);
+        }
+    }
+
+    async function diyetisyenGiris(ev) {
+        ev?.preventDefault?.();
+        const [email, sifre] = ['dg_email', 'dg_sifre'].map(id => document.getElementById(id).value.trim());
+        if (!email || !sifre) { showMessage('Giriş bilgileri eksik.'); return; }
+
+        setLoading('btnDiyetisyenGiris', true);
+        const {res, data} = await apiFetch('/api/v1/diyetisyen/giris', {
+            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email, sifre })
+        });
+        setLoading('btnDiyetisyenGiris', false);
+
+        if (!res.ok) { showMessage(extractError(data, res)); showResult('Giriş başarısız.', true); }
+        else if (data?.id) {
+            localStorage.setItem('lightlifeDietitian', JSON.stringify(data));
+            localStorage.removeItem('lightlifeUser');
+            window.location.href = '/dietitian-dashboard.html';
+        } else { showMessage('Giriş başarısız.'); }
+    }
+
+  
+    (function(){
+        try {
+            if(localStorage.getItem('lightlifeUser')) window.location.href='/user-dashboard.html';
+            else if(localStorage.getItem('lightlifeDietitian')) window.location.href='/dietitian-dashboard.html';
+        } catch(e){}
+    })();
+
+    
+    updateFormVisibility();
+</script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package com.akif.lightlife.service.impl;
 
-import com.akif.lightlife.dto.request.OgunTarifEkleRequest;
-import com.akif.lightlife.dto.response.OgunTarifResponse;
+import com.akif.lightlife.dto.request.OgunDiyetTarifiEkleRequest;
+import com.akif.lightlife.dto.response.OgunDiyetTarifiResponse;
 import com.akif.lightlife.entity.DiyetTarifi;
 import com.akif.lightlife.entity.Ogun;
 import com.akif.lightlife.entity.OgunDiyetTarifi;
@@ -11,7 +11,6 @@ import com.akif.lightlife.repository.DiyetTarifiRepository;
 import com.akif.lightlife.repository.OgunDiyetTarifiRepository;
 import com.akif.lightlife.repository.OgunRepository;
 import com.akif.lightlife.service.OgunDiyetTarifiService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,50 +20,36 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OgunDiyetTarifiServiceImpl implements OgunDiyetTarifiService {
 
-    private final OgunRepository ogunRepo;
-    private final DiyetTarifiRepository tarifRepo;
-    private final OgunDiyetTarifiRepository repo;
-    private final OgunDiyetTarifiMapper mapper;
+    private final OgunDiyetTarifiRepository ogunDiyetTarifiRepository;
+    private final OgunRepository ogunRepository;
+    private final DiyetTarifiRepository diyetTarifiRepository;
+    private final OgunDiyetTarifiMapper ogunDiyetTarifiMapper;
 
     @Override
-    public OgunTarifResponse ekle(OgunTarifEkleRequest r) {
+    public OgunDiyetTarifiResponse tarifEkle(OgunDiyetTarifiEkleRequest request) {
 
-        Ogun ogun = ogunRepo.findById(r.getOgunId())
-                .orElseThrow(() -> new NotFoundException("Öğün bulunamadı"));
+        Ogun ogun = ogunRepository.findById(request.getOgunId())
+                .orElseThrow(() -> new NotFoundException("Öğün bulunamadı: " + request.getOgunId()));
 
-        DiyetTarifi tarif = tarifRepo.findById(r.getTarifId())
-                .orElseThrow(() -> new NotFoundException("Tarif bulunamadı"));
+        DiyetTarifi tarif = diyetTarifiRepository.findById(request.getTarifId())
+                .orElseThrow(() -> new NotFoundException("Diyet tarifi bulunamadı: " + request.getTarifId()));
 
-        OgunDiyetTarifi odt = OgunDiyetTarifi.builder()
+        OgunDiyetTarifi ogunDiyetTarifi = OgunDiyetTarifi.builder()
                 .ogun(ogun)
                 .tarif(tarif)
-                .porsiyon(r.getPorsiyon())
+                .porsiyon(request.getPorsiyon())
                 .build();
 
-        repo.save(odt);
+        ogunDiyetTarifiRepository.save(ogunDiyetTarifi);
 
-        return mapper.toResponse(odt);
+        return ogunDiyetTarifiMapper.toResponse(ogunDiyetTarifi);
     }
 
     @Override
-    public List<OgunTarifResponse> ogunTarifleri(Long ogunId) {
-
-        Ogun ogun = ogunRepo.findById(ogunId)
-                .orElseThrow(() -> new NotFoundException("Öğün bulunamadı"));
-
-        return repo.findByOgun(ogun)
-                .stream()
-                .map(mapper::toResponse)
+    public List<OgunDiyetTarifiResponse> ogunTarifleri(Long ogunId) {
+        List<OgunDiyetTarifi> tarifler = ogunDiyetTarifiRepository.findByOgunId(ogunId);
+        return tarifler.stream()
+                .map(ogunDiyetTarifiMapper::toResponse)
                 .toList();
-    }
-
-    @Override
-    public void sil(Long id) {
-
-        if (!repo.existsById(id)) {
-            throw new NotFoundException("Öğe bulunamadı");
-        }
-
-        repo.deleteById(id);
     }
 }

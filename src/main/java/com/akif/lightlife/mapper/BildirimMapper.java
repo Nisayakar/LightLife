@@ -7,14 +7,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class BildirimMapper {
 
-    public BildirimResponse toResponse(Bildirim b) {
-        return BildirimResponse.builder()
-                .id(b.getId())
-                .baslik(b.getBaslik())
-                .mesaj(b.getMesaj())
-                .tip(b.getTip())
-                .tarih(b.getTarih().toString())
-                .okunduMu(b.isOkunduMu())
-                .build();
-    }
+	public BildirimResponse toResponse(Bildirim b) {
+	    return BildirimResponse.builder()
+	        .id(b.getId())
+	        .baslik(b.getBaslik())
+	        .mesaj(b.getMesaj())
+	        .okunduMu(b.isOkunduMu())
+	        .tip(b.getTip())
+	        .kaynak(b.getKaynak()) // 🔥 KRİTİK
+	        .tarih(b.getTarih())
+	        .build();
+	}
+
 }

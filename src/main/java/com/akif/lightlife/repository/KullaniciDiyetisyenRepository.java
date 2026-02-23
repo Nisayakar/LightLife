@@ -1,20 +1,21 @@
 package com.akif.lightlife.repository;
 
-import com.akif.lightlife.entity.Diyetisyen;
 import com.akif.lightlife.entity.Kullanici;
 import com.akif.lightlife.entity.KullaniciDiyetisyen;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
 public interface KullaniciDiyetisyenRepository extends JpaRepository<KullaniciDiyetisyen, Long> {
-	List<KullaniciDiyetisyen> findByKullanici(Kullanici kullanici);
-	
-	List<KullaniciDiyetisyen> findByDiyetisyen(Diyetisyen diyetisyen);
-	
+
+    List<KullaniciDiyetisyen> findByDiyetisyenIdAndBitisTarihiIsNull(Long diyetisyenId);
+
+    List<KullaniciDiyetisyen> findByKullaniciIdAndBitisTarihiIsNull(Long kullaniciId);
+
+    Optional<KullaniciDiyetisyen> findFirstByKullaniciIdAndBitisTarihiIsNull(Long kullaniciId);
+
+    boolean existsByKullaniciIdAndDiyetisyenIdAndBitisTarihiIsNull(Long kullaniciId, Long diyetisyenId);
+
 	KullaniciDiyetisyen findByKullaniciAndAktifTrue(Kullanici kullanici);
-	
 }

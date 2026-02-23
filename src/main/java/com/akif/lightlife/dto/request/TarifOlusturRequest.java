@@ -9,5 +9,6 @@ public class TarifOlusturRequest {
     private String ad;
     private String aciklama;
     private Long diyetisyenId;
+    private Long kullaniciId;
     private List<MalzemeRequest> malzemeler;
 }

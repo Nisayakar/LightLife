@@ -24,6 +24,9 @@ public class Bildirim {
     private String mesaj;
 
     private boolean okunduMu;
+    
+    private String kaynak; // SISTEM, DANISAN, DIYETISYEN
+
 
     private String tip; // KAMPANYA, EGITIM, HEDEF, MESAJ, SISTEM
 

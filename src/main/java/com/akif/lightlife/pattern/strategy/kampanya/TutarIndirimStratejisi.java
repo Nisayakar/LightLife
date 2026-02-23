@@ -2,14 +2,15 @@ package com.akif.lightlife.pattern.strategy.kampanya;
 
 public class TutarIndirimStratejisi implements KampanyaStratejisi {
 
-    private final double indirim;
+    private final int indirimTutari; 
 
-    public TutarIndirimStratejisi(double indirim) {
-        this.indirim = indirim;
+    public TutarIndirimStratejisi(int indirimTutari) {
+        this.indirimTutari = indirimTutari;
     }
 
     @Override
     public double indirimUygula(double tutar) {
-        return Math.max(0, tutar - indirim);
+        double sonuc = tutar - indirimTutari;
+        return Math.max(sonuc, 0);
     }
 }

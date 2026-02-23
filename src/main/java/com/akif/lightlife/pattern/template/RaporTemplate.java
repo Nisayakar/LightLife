@@ -15,3 +15,5 @@ public abstract class RaporTemplate {
         System.out.println("LightLife Rapor Sistemi");
     }
 }
+
+

@@ -11,4 +11,7 @@ public class KiloResponse {
     private double kiloDeger;
     private String tarih;
     private Long kullaniciId;
+
+    private Double bmi;
+    private String bmiKategori;
 }
