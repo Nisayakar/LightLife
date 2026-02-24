@@ -1,14 +1,25 @@
-🥗 LightLife – AI Destekli Diyet ve Sağlıklı Yaşam Yönetim Sistemi
+LightLife
 
-📌 Proje Hakkında
+LightLife is a backend application developed to manage users’ diet and healthy lifestyle processes.
+The system provides secure user authentication, diet plan management, activity tracking, and role-based operations for users and dietitians.
 
-LightLife, bireylerin sağlıklı yaşam süreçlerini dijital ortamda yönetmelerini sağlayan, diyetisyen ve danışan etkileşimini destekleyen Spring Boot tabanlı bir backend uygulamasıdır.
+This project was developed using Spring Boot to practice scalable backend architecture and modern authentication mechanisms.
 
-Sistem; kullanıcıların diyet planlarını takip etmesini, aktivitelerini yönetmesini, abonelik işlemlerini gerçekleştirmesini ve bildirim mekanizmaları aracılığıyla süreçlerini sürdürülebilir hale getirmesini amaçlar.
+Project Scope
 
-Proje içerisinde modern backend mimarisi ve yazılım tasarım prensipleri uygulanmıştır.
+The application allows:
 
-🚀 Kullanılan Teknolojiler
+User registration and authentication
+
+Diet plan management
+
+Activity tracking
+
+Role-based authorization
+
+Notification and request management
+
+Technologies
 
 Java 17
 
@@ -20,148 +31,64 @@ JWT Authentication
 
 Spring Data JPA
 
-PostgreSQL / SQL Database
+RESTful API
 
 Maven
 
-RESTful API Architecture
+Architecture
 
+The project follows a layered architecture structure:
 
-🧠 Kullanılan Design Pattern’ler
+src
+ ├── controller
+ ├── service
+ ├── repository
+ ├── entity
+ ├── dto
+ └── security
 
-Projede sürdürülebilir ve genişletilebilir mimari için çeşitli tasarım desenleri uygulanmıştır:
+Business logic, data access, and API layers are separated to ensure maintainability and scalability.
 
-Pattern	Kullanım Amacı
+Security
 
-Factory Pattern	Bildirim türlerinin dinamik oluşturulması
+Authentication and authorization processes are implemented using Spring Security and JWT-based authentication.
 
-Observer Pattern	Bildirim ve olay yönetimi
+Role-based access control is applied across protected endpoints.
 
-Strategy Pattern	Kilo hedefi ve kampanya hesaplama
+Setup
 
-Facade Pattern	Kullanıcı panel işlemlerinin sadeleştirilmesi
+Clone the repository:
 
-Template Pattern	Günlük & haftalık rapor üretimi
+git clone https://github.com/USERNAME/lightlife.git
 
-
-👥 Sistem Rolleri
-
-🧑 Kullanıcı (Danışan)
-
-Diyet planlarını görüntüleme
-
-Aktivite takibi
-
-BMI ve hedef hesaplama
-
-Bildirim alma
-
-Destek talebi oluşturma
-
-
-🧑‍⚕️ Diyetisyen
-
-Danışan yönetimi
-
-Diyet planı oluşturma
-
-Rapor görüntüleme
-
-Bildirim gönderme
-
-🔐 Güvenlik
-
-JWT tabanlı kimlik doğrulama
-
-Spring Security entegrasyonu
-
-Role-based authorization
-
-Custom Authentication Filter
-
-
-📂 Proje Mimarisi
-
-lightlife
-│
-├── controller      → REST API endpointleri
-├── service         → İş mantığı
-├── repository      → Veri erişim katmanı
-├── entity          → Veritabanı modelleri
-├── dto             → Request / Response modelleri
-├── security        → JWT & Authentication
-├── pattern         → Design Pattern implementasyonları
-└── util            → Yardımcı hesaplama sınıfları
-
-
-⚙️ Kurulum
-1️⃣ Repository Klonla
-
-git clone https://github.com/kullaniciAdi/lightlife.git
-
-2️⃣ Proje Dizini
+Navigate into the project directory:
 
 cd lightlife
 
-3️⃣ Veritabanı Ayarı
-
-application.properties dosyasını düzenleyin:
-
-spring.datasource.url=jdbc:postgresql://localhost:5432/lightlife
-
-spring.datasource.username=postgres
-
-spring.datasource.password=yourpassword
-
-4️⃣ Projeyi Çalıştır
+Run the application:
 
 mvn spring-boot:run
 
-Uygulama:
+The application runs on:
 
 http://localhost:8080
 
-📡 API Özellikleri
+Learning Outcomes
 
-Kullanıcı Yönetimi
+During development, the following concepts were practiced:
 
-Diyet Yönetimi
+REST API development
 
-Aktivite Takibi
+Backend architecture design
 
-Abonelik Sistemi
+Authentication and authorization
 
-Bildirim Yönetimi
+Layered system design
 
-Destek Talebi Sistemi
+Spring ecosystem usage
 
-Raporlama
-
-📊 Öne Çıkan Özellikler
-
-Katmanlı Mimari
-
-RESTful API Tasarımı
-
-JWT Authentication
-
-Design Pattern Kullanımı
-
-Ölçeklenebilir Backend Yapısı
-
-Modüler Servis Yapısı
-
-🧪 Test
-
-mvn test
-
-
-👩‍💻 Geliştirici
+Author
 
 Nisa Yakar
 
-Software Engineering Student
-
 Mehmet Akif Güneş
-
-Software Engineering Student
