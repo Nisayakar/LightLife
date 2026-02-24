@@ -1,7 +1,5 @@
-LİGHTLİFE
-
-
-PROJE HAKKINDA
+🥗 LightLife – AI Destekli Diyet ve Sağlıklı Yaşam Yönetim Sistemi
+📌 Proje Hakkında
 
 LightLife, bireylerin sağlıklı yaşam süreçlerini dijital ortamda yönetmelerini sağlayan, diyetisyen ve danışan etkileşimini destekleyen Spring Boot tabanlı bir backend uygulamasıdır.
 
@@ -9,25 +7,26 @@ Sistem; kullanıcıların diyet planlarını takip etmesini, aktivitelerini yön
 
 Proje içerisinde modern backend mimarisi ve yazılım tasarım prensipleri uygulanmıştır.
 
-KULLANILAN TEKNOLOJİLER
+🚀 Kullanılan Teknolojiler
 
--Java 17
+Java 17
 
--Spring Boot
+Spring Boot
 
--Spring Security
+Spring Security
 
--JWT Authentication
+JWT Authentication
 
--Spring Data JPA
+Spring Data JPA
 
--PostgreSQL / SQL Database
+PostgreSQL / SQL Database
 
--Maven
+Maven
 
--RESTful API Architecture
+RESTful API Architecture
 
-KULLANILAN DESİGN PATTERN'LER
+
+Kullanılan Design Pattern’ler
 
 Projede sürdürülebilir ve genişletilebilir mimari için çeşitli tasarım desenleri uygulanmıştır:
 
@@ -39,9 +38,9 @@ Facade Pattern	Kullanıcı panel işlemlerinin sadeleştirilmesi
 Template Pattern	Günlük & haftalık rapor üretimi
 
 
-SİSTEM ROLLERİ
+👥 Sistem Rolleri
 
--Kullanıcı (Danışan)
+🧑 Kullanıcı (Danışan)
 
 Diyet planlarını görüntüleme
 
@@ -53,7 +52,8 @@ Bildirim alma
 
 Destek talebi oluşturma
 
--Diyetisyen
+
+🧑‍⚕️ Diyetisyen
 
 Danışan yönetimi
 
@@ -63,7 +63,7 @@ Rapor görüntüleme
 
 Bildirim gönderme
 
-GÜVENLİK
+🔐 Güvenlik
 
 JWT tabanlı kimlik doğrulama
 
@@ -74,8 +74,7 @@ Role-based authorization
 Custom Authentication Filter
 
 
-PROJE MİMARİSİ
-
+📂 Proje Mimarisi
 lightlife
 │
 ├── controller      → REST API endpointleri
@@ -87,26 +86,35 @@ lightlife
 ├── pattern         → Design Pattern implementasyonları
 └── util            → Yardımcı hesaplama sınıfları
 
-Kurulum
+
+⚙️ Kurulum
 1️⃣ Repository Klonla
+
 git clone https://github.com/kullaniciAdi/lightlife.git
+
 2️⃣ Proje Dizini
+
 cd lightlife
+
 3️⃣ Veritabanı Ayarı
 
 application.properties dosyasını düzenleyin:
 
 spring.datasource.url=jdbc:postgresql://localhost:5432/lightlife
+
 spring.datasource.username=postgres
+
 spring.datasource.password=yourpassword
+
 4️⃣ Projeyi Çalıştır
+
 mvn spring-boot:run
 
 Uygulama:
 
 http://localhost:8080
 
-API ÖZELLİKLERİ
+📡 API Özellikleri
 
 Kullanıcı Yönetimi
 
@@ -122,8 +130,7 @@ Destek Talebi Sistemi
 
 Raporlama
 
-
-ÖNE ÇIKAN ÖZELLİKLER
+📊 Öne Çıkan Özellikler
 
 ✅ Katmanlı Mimari
 ✅ RESTful API Tasarımı
@@ -132,11 +139,11 @@ Raporlama
 ✅ Ölçeklenebilir Backend Yapısı
 ✅ Modüler Servis Yapısı
 
-TEST
+🧪 Test
 mvn test
 
 
-GELİŞTİRİCİLER
+👩‍💻 Geliştirici
 
 Nisa Yakar
 Software Engineering Student
