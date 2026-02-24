@@ -80,6 +80,7 @@ Custom Authentication Filter
 
 
 📂 Proje Mimarisi
+
 lightlife
 │
 ├── controller      → REST API endpointleri
