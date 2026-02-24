@@ -31,10 +31,15 @@ Kullanılan Design Pattern’ler
 Projede sürdürülebilir ve genişletilebilir mimari için çeşitli tasarım desenleri uygulanmıştır:
 
 Pattern	Kullanım Amacı
+
 Factory Pattern	Bildirim türlerinin dinamik oluşturulması
+
 Observer Pattern	Bildirim ve olay yönetimi
+
 Strategy Pattern	Kilo hedefi ve kampanya hesaplama
+
 Facade Pattern	Kullanıcı panel işlemlerinin sadeleştirilmesi
+
 Template Pattern	Günlük & haftalık rapor üretimi
 
 
@@ -132,21 +137,29 @@ Raporlama
 
 📊 Öne Çıkan Özellikler
 
-✅ Katmanlı Mimari
-✅ RESTful API Tasarımı
-✅ JWT Authentication
-✅ Design Pattern Kullanımı
-✅ Ölçeklenebilir Backend Yapısı
-✅ Modüler Servis Yapısı
+Katmanlı Mimari
+
+RESTful API Tasarımı
+
+JWT Authentication
+
+Design Pattern Kullanımı
+
+Ölçeklenebilir Backend Yapısı
+
+Modüler Servis Yapısı
 
 🧪 Test
+
 mvn test
 
 
 👩‍💻 Geliştirici
 
 Nisa Yakar
+
 Software Engineering Student
 
 Mehmet Akif Güneş
+
 Software Engineering Student
