@@ -1,4 +1,5 @@
 🥗 LightLife – AI Destekli Diyet ve Sağlıklı Yaşam Yönetim Sistemi
+
 📌 Proje Hakkında
 
 LightLife, bireylerin sağlıklı yaşam süreçlerini dijital ortamda yönetmelerini sağlayan, diyetisyen ve danışan etkileşimini destekleyen Spring Boot tabanlı bir backend uygulamasıdır.
@@ -26,7 +27,7 @@ Maven
 RESTful API Architecture
 
 
-Kullanılan Design Pattern’ler
+🧠 Kullanılan Design Pattern’ler
 
 Projede sürdürülebilir ve genişletilebilir mimari için çeşitli tasarım desenleri uygulanmıştır:
 
